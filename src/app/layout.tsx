@@ -7,6 +7,7 @@ import Sidebar from "./_components/ui/Sidebar";
 import { ModalProvider } from "~/lib/providers/modalProvider";
 import { SigninModal } from "./_components/ui/Moda";
 import GlobalProvider from "~/lib/providers/GlobalProvider";
+import Menu from "./_components/ui/Menu";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
         <GlobalProvider>
           <ModalProvider>
           <Sidebar  />
+          <Menu/>
           <SigninModal/>
           {children}
         </ModalProvider>
