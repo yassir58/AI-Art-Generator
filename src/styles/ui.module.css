@@ -1,0 +1,49 @@
+.main {
+    background-image: linear-gradient(to bottom right, rgba(183, 135, 245, 1), rgba(116, 62, 228, 1));
+}
+
+.banner {
+    background-image: url('/Hero-Background-notecode.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left:0;
+    height:75vh;
+    border-bottom-right-radius: 55%;
+    border-bottom-left-radius: 55%;
+    object-fit: cover;
+}
+
+.gallery {
+    line-height: 0;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    -webkit-column-count: 5;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 5;
+    -moz-column-gap: 0px;
+    column-count: 4;
+    column-gap: 26px;
+    
+}
+
+.imageItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .imageItem img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 5px;
+      transition: ease-in;
+      border: 6px solid #212936;
+  }

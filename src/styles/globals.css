@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/***** Thumb Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    background-color: #7C71FF;
+    height: 18px;
+    width: 18px;    
+ }
+
+ input[type="range"]::-moz-range-thumb {
+    border: none; /*Removes extra border that FF applies*/
+    border-radius: 50%; /*Removes default border-radius that FF applies*/
+    background-color: #7C71FF;
+    height: 18px;
+    width: 18px;
+}
+
+@layer components {
+    .sideLink {
+        @apply hover:bg-purple w-[40px] h-[40px] rounded-md flex justify-center items-center; 
+    }
+
+    .sideLinkActive {
+        @apply hover:bg-lightPurple bg-purple w-[40px] h-[40px] rounded-md flex justify-center items-center; 
+    }
+    
+    .primaryInput {
+        @apply bg-veryDarkGray text-white placeholder:text-lightGray w-[90%] p-2 rounded-md outline-none; 
+    }
+
+    .closeButton {
+        @apply  border-mediumGray rounded-full w-[30px] h-[30px] border-2 flex justify-center items-center; 
+    }
+
+
+    .resolutionButton {
+        @apply bg-veryDarkGray border-none outline-none hover:opacity-90 text-veryLightGray  rounded-md w-[180px] text-sm h-[30px] border-2 flex justify-center items-center;
+    }
+    .resolutionButtonActive {
+        @apply  bg-lightPurple hover:bg-purple text-veryLightGray rounded-md border-none outline-none w-[180px] text-sm h-[30px] border-2 flex justify-center items-center; 
+    }
+
+    .largeButton {
+        @apply bg-veryDarkGray border-none outline-none hover:bg-lightPurple text-veryLightGray  rounded-md w-full p-4 py-5 gap-6  text-sm h-[30px] border-2 flex justify-center items-center;
+    }
+
+    .largeSecondary {
+        @apply bg-lightPurple border-none outline-none hover:bg-purple text-veryLightGray  rounded-md w-full p-4 py-5 gap-6  text-sm h-[30px] border-2 flex justify-center items-center;
+    }
+
+    .iconButton {
+        @apply bg-veryDarkGray border-none outline-none hover:opacity-90 text-veryLightGray p-2 rounded-md  border-2 flex justify-center items-center hover:bg-lightPurple;
+    }
+    .primaryButton {
+        @apply bg-veryDarkGray border-none outline-none hover:opacity-90 text-veryLightGray  rounded-md py-2 px-4 border-2 gap-2 flex justify-center items-center hover:bg-lightPurple;
+    }
+
+    .iconButtonActive {
+        @apply bg-lightPurple text-veryLightGray rounded-md border-none outline-none w-[30px] h-[30px] border-2 flex justify-center items-center; 
+    }
+}
