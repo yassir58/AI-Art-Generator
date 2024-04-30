@@ -68,36 +68,36 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+    // CredentialsProvider({
+    //   name: "Credentials",
+    //   credentials: {
+    //     email: { label: "Username", type: "text", placeholder: "jsmith" },
+    //     password: { label: "Password", type: "password" },
+    //   },
+    //   async authorize(credentials) {
+    //     if (!credentials?.email || !credentials?.password) return null;
 
-        const existingUser = await db.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
-        if (!existingUser) return null;
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const passowrdMatched = await compare(
-          credentials.password,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          existingUser?.password??''
-        );
-        if (!passowrdMatched) return null;
+    //     const existingUser = await db.user.findUnique({
+    //       where: {
+    //         email: credentials.email,
+    //       },
+    //     });
+    //     if (!existingUser) return null;
+    //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    //     const passowrdMatched = await compare(
+    //       credentials.password,
+    //       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    //       existingUser?.password??''
+    //     );
+    //     if (!passowrdMatched) return null;
 
-        return {
-          id: existingUser?.id,
-          name: existingUser?.name,
-          email: existingUser?.email,
-        };
-      },
-    }),
+    //     return {
+    //       id: existingUser?.id,
+    //       name: existingUser?.name,
+    //       email: existingUser?.email,
+    //     };
+    //   },
+    // }),
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!
