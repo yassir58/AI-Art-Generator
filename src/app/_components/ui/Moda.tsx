@@ -2,7 +2,7 @@
 'use client'
 import {useState, useContext} from 'react'
 import {modalContext} from '~/lib/providers/modalProvider'
-
+import { signIn } from 'next-auth/react'
 interface props{
     image:string
     prompt:string
@@ -32,7 +32,7 @@ export const SigninModal:React.FC = ({})=>{
                </button>
               <div className='flex flex-col justify-start items-center gap-4'> 
                 <h1 className='text-xl text-veryLightGray font-semibold'>Sign In to continue</h1>
-                <button className='largeSecondary w-[400px]'>
+                <button className='largeSecondary w-[400px]' onClick={()=> signIn ('github', {callbackUrl:'/'})}>
                     <img src='/github.svg'/>
                     Signin with github
                 </button>

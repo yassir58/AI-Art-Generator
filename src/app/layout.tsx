@@ -6,7 +6,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import Sidebar from "./_components/ui/Sidebar";
 import { ModalProvider } from "~/lib/providers/modalProvider";
 import { SigninModal } from "./_components/ui/Moda";
-
+import GlobalProvider from "~/lib/providers/GlobalProvider";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -28,11 +28,13 @@ export default function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
       <main className={`w-full h-[100vh] bg-darkBlue flex justify-center items-center overflow-hidden`}>
         <TRPCReactProvider>
-        <ModalProvider>
-        <Sidebar  />
-        <SigninModal/>
+        <GlobalProvider>
+          <ModalProvider>
+          <Sidebar  />
+          <SigninModal/>
           {children}
         </ModalProvider>
+        </GlobalProvider>
         </TRPCReactProvider>
       </main>
       </body>
