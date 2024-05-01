@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
-
+import { EdgeStoreProvider } from '../lib/edgestore';
 import { TRPCReactProvider } from "~/trpc/react";
 import Sidebar from "./_components/ui/Sidebar";
 import { ModalProvider } from "~/lib/providers/modalProvider";
@@ -32,9 +32,9 @@ export default function RootLayout({
         <GlobalProvider>
           <ModalProvider>
           <Sidebar  />
-          <Menu/>
+          {/* <Menu/> */}
           <SigninModal/>
-          {children}
+          <EdgeStoreProvider>{children}</EdgeStoreProvider>
         </ModalProvider>
         </GlobalProvider>
         </TRPCReactProvider>

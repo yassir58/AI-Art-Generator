@@ -1,13 +1,15 @@
 'use client'
 import Link from "next/link"
 import { SigninModal } from "./Moda";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useSession } from "next-auth/react";
 import { modalContext } from "~/lib/providers/modalProvider";
+import { signOut } from "next-auth/react";
 
 const Sidebar:React.FC  = () =>{
 
     const {setIsOpen} = useContext(modalContext);
+    const [signoutOpen, setSignoutOpen] = useState(false)
     const { status, data } = useSession({
         required: true,
         onUnauthenticated() {
@@ -44,9 +46,21 @@ const Sidebar:React.FC  = () =>{
                 </Link>
                 </div>
             </div>
-               {status == 'authenticated'? <img className='w-[40px] h-[40px] rounded-full' src={data?.user?.image??''}/> :  <button className='iconButton' onClick={onOpen}>
+               <div className='relative'>
+                <div className={`absolute ${signoutOpen?'block':'hidden'} -top-[20px] -right-[180px] z-50 w-[200px] h-auto p-6 flex justify-start items-start rounded-md`}>
+                    <button className="primaryButton w-full justify-start shadow-md" onClick={() => signOut()}>
+                        <img src="/signout.svg" alt="" />
+                        Sign out
+                    </button>
+                </div>
+               {status == 'authenticated'? 
+               <button className='border-none bg-transparent' onClick={()=> setSignoutOpen (!signoutOpen)}>
+                <img className='w-[40px] h-[40px] rounded-full' src={data?.user?.image??''}/>
+               </button>
+               :  <button className='iconButton' onClick={onOpen}>
                     <img src="/signin.svg" alt="" />
                 </button>}
+               </div>
         </div>
     )
 }
