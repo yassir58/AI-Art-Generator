@@ -1,6 +1,7 @@
 'use client'
 import { createContext } from "react";
 import {SessionProvider} from 'next-auth/react';
+import { Toaster } from 'react-hot-toast';
 
 
 const GlobalContext = createContext(null);
@@ -13,6 +14,7 @@ const GlobaleProvider:React.FC<props> = ({children})=>{
         <GlobalContext.Provider value={null} >
 
             <SessionProvider>
+                <Toaster/>
             {children}
             </SessionProvider>
         </GlobalContext.Provider>

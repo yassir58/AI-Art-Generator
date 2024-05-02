@@ -40,7 +40,7 @@ const Card:React.FC<props> = ({image})=>{
         onError: ()=> console.log ('failed to add item to collection')
     })
     return (
-        <div className='w-[230px] gap-4 h-auto relative z-10' >
+        <div className='w-[230px] gap-4 h-auto relative z-10 mb-16' >
             <div className={`${ui.imageItem}`} onClick={()=>setIsOpen?.(true)}>
                 <img src={image.url} alt="" className='hover:opacity-85'/>
             </div>

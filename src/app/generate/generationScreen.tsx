@@ -1,11 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 'use client'
-import {useState, useContext} from  'react'
+import {useState, useContext, useEffect} from  'react'
 import { HfInference } from "@huggingface/inference";
 import { modalContext } from '~/lib/providers/modalProvider';
 import { useSession } from 'next-auth/react';
 import ui from '~/styles/ui.module.css'
 import { useEdgeStore } from '~/lib/edgestore';
 import { api } from '~/trpc/react';
+import { Image } from '../feed/FeedScreen';
+import toast from 'react-hot-toast';
+
+
 const GenerationScreen:React.FC = ()=>{
   const [activeRes, setActive] = useState('1024 x 1024 (1:1)')
   const [url, setUrl] = useState ('')
@@ -17,12 +23,15 @@ const GenerationScreen:React.FC = ()=>{
     const [negative, setNegative] = useState ('')
     const [isLoading, setLoading] = useState (false)
     const utils = api.useUtils ()
+    const [progress, setProgress] = useState ('Generating image ...')
     const saveImageMutation = api.post.createImage.useMutation ({
       onSuccess: () =>  {
-        console.log ('image saved successfully')
+        toast.success ('image saved successfully')
         void utils.post.getImages.invalidate();
+        if (localStorage.getItem('settings'))
+          localStorage.removeItem ('settings');
       },
-      onError: ()=> console.log ('Failed to save image')
+      onError: ()=> toast.error ('Failed to save image')
     })
     const { status, data } = useSession({
       required: true,
@@ -59,12 +68,13 @@ const GenerationScreen:React.FC = ()=>{
         const res = await edgestore.publicFiles.upload({
           file,
           onProgressChange: (progress) => {
+            setProgress ('uploading image ...')
             console.log(progress);
           },
         });
         // you can run some server action or api here
         // to add the necessary data to your database
-        console.log(res);
+        setProgress ('Image generated successfully')
         saveImageMutation.mutate({
           name: 'image',
           url: res.url,
@@ -76,6 +86,9 @@ const GenerationScreen:React.FC = ()=>{
           width: parseInt(activeRes.split('x')[0]??''),
           height: parseInt(activeRes.split(' ')[2]??''),
         })
+        setProgress ('Saving image ...')
+        setLoading (false);
+
       } catch (error) {
         console.log ('failed to upload image');
        setLoading (false);
@@ -87,7 +100,7 @@ const GenerationScreen:React.FC = ()=>{
     setLoading (true)
     const imageBlob = await hf.textToImage({
         inputs: prompt,
-        model: 'stabilityai/stable-diffusion-2',
+        model: 'stabilityai/stable-diffusion-xl-base-1.0',
         parameters: {
           negative_prompt: negative,
           guidance_scale: guidence,
@@ -97,13 +110,27 @@ const GenerationScreen:React.FC = ()=>{
       })
     setUrl (URL.createObjectURL(imageBlob)??'')
     void uploadFile (new File([imageBlob], 'image.png'));
-    setLoading (false);
    }catch(err){
       setLoading (false);
       console.log (err);
    }
   }
 
+  
+  useEffect(()=>{
+    try{
+      const settings = localStorage.getItem ('settings')
+    console.log ('settings : ', JSON.parse (settings??''))
+    if (settings){
+      const parsed:Image = JSON.parse (settings??'') ?? {}
+      setPrompt (parsed?.prompt??'')
+      setNegative (parsed?.negative??'')
+      setGuidence (parsed?.guidence??'')
+    }
+  }catch (err){
+    console.log ('err: ', err)
+  }
+  }, [])
   return (
     <div className="flex w-full items-center justify-center">
       <div className="flex w-[90%] items-center justify-center">
@@ -111,20 +138,20 @@ const GenerationScreen:React.FC = ()=>{
           <div className="flex w-full flex-col items-start justify-start gap-3">
             <h1 className="text-lightGray text-[14px] font-[500]">Prompt</h1>
             <textarea
+              value={prompt}
               onChange={(e)=> setPrompt(e.target.value)}
               placeholder="Enter the prompt"
-              rows={1}
               
-              className="primaryInput"
+              className="primaryInput max-h-[100px]"
             />
           </div>
           <div className="flex w-full flex-col items-start justify-start gap-3">
             <h1 className="text-lightGray text-[14px] font-[500]">Negative Prompt (optional)</h1>
             <textarea
+              value={negative}
               onChange={(e)=> setNegative(e.target.value)}
               placeholder="Enter the prompt"
-              rows={1}
-              className="primaryInput"
+              className="primaryInput max-h-[100px]"
             />
           </div>
           {/* <div className="flex w-full flex-col items-start justify-start gap-3">
@@ -166,7 +193,7 @@ const GenerationScreen:React.FC = ()=>{
           {isLoading ?(
           <div className='flex gap-2 justify-center items-center'>
             <div className={ui.loader}></div>
-            <h1 className=' text-[14px] font-[500]'>Generatint Image</h1>
+            <h1 className=' text-[14px] font-[500]'>{progress}</h1>
           </div>
           ) :( 
             <div className='flex justify-start items-start gap-2'>

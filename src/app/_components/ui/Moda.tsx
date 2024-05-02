@@ -3,6 +3,10 @@
 import {useState, useContext, createContext} from 'react'
 import {modalContext} from '~/lib/providers/modalProvider'
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import axios from 'axios'
+import ui from '~/styles/ui.module.css'
 interface props{
     image: {
         id: string;
@@ -64,7 +68,42 @@ const Modal:React.FC<props> = ({image, children})=>{
 
     const onOpen = ()=> setIsOpen (true)
     const onClose = ()=> setIsOpen (false)
+    const router = useRouter ();
+    const saveSettings = ()=>{
+        localStorage.setItem('settings', JSON.stringify(image));
+    }
 
+    const [progress, setProgress] = useState ('Dowloading ...');
+    const [isLoading, setLoading] = useState (false)
+    const handleDownload = async () => {
+        setLoading (true)
+        try{
+            await axios
+         .get(image.url, {
+           responseType: "blob", // Specify the response type as 'blob' to handle binary data
+         })
+         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+         .then((res) => res.data)
+         .then((blob) => {
+          
+           setProgress ('Image Downloaded')
+           const url = window.URL.createObjectURL(new Blob([blob]));
+           const link = document.createElement("a");
+           link.href = url;
+           link.setAttribute("download", `${image.id}.png`);
+           document.body.appendChild(link);
+           toast.success ('Image downloaded successfully');
+           link.click();
+   
+           // Clean up and remove the link
+           link.parentNode!.removeChild(link);
+            setLoading (false)
+         });
+        }catch(err){
+            setLoading (false);
+            toast.error ('Something went wong');
+        }
+     };
     return (
         <>
         <div className='' >
@@ -78,9 +117,9 @@ const Modal:React.FC<props> = ({image, children})=>{
                </button>
                 <div className='flex flex-col justify-start items-start gap-4 w-[300px]'>
                     <img src={image.url} alt="" className="w-[280px] rounded-md border-[6px] border-veryDarkGray" />
-                    <button className='primaryButton '>
-                        <img src={'/download.svg'} alt="" />
-                        Download
+                    <button className='primaryButton ' onClick={handleDownload}>
+                        {isLoading ? <div className={`${ui.loader}`}></div>:<img src={'/download.svg'} alt="" />}
+                        {isLoading?progress:'Download Image'}
                     </button>
                 </div>
                 <div className='flex flex-col justify-start items-start gap-3  w-full'>
@@ -106,7 +145,11 @@ const Modal:React.FC<props> = ({image, children})=>{
                         <p className="text-veryLightGray text-lg font-[400]">{image.width}</p>
                     </div>
                 </div>
-                    <button className='largeSecondary'>
+                    <button className='largeSecondary' onClick={()=>{
+                        saveSettings ()
+                        router.push ('/generate')
+                        toast.success ('Settings saved successfully')
+                    }}>
                         <img src="/Magic.svg"  alt="" />
                         Generate with this settings
                     </button>

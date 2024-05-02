@@ -1,12 +1,10 @@
 'use client'
 
 import ui from '~/styles/ui.module.css'
-
 import { api } from "~/trpc/react"
 import { useSession } from "next-auth/react"
 import Card from "../_components/ui/Card"
 import Modal from '../_components/ui/Moda'
-
 import { Image } from '../feed/FeedScreen'
 const Collection:React.FC = ()=>{
 
@@ -22,7 +20,12 @@ const Collection:React.FC = ()=>{
         userId:data?.user?.id ?? ''
     });
 
-    console.log ('collection: ', collection)
+    if (isLoading)
+      return (<div className='flex justify-center items-center w-full h-full'>
+
+    <div className={`${ui.loader}`}></div>
+  </div>)
+    
     return (
         <div className={`${ui.gallery}`}>
          {collection?.map((image:Image, index:number)=>{

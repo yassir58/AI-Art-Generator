@@ -1,3 +1,6 @@
+'use client'
+
+
 interface props {
     image:{
         id: string;
@@ -16,6 +19,10 @@ interface props {
 }
 
 const HistoryCard:React.FC<props> = ({image})=>{
+
+
+    
+
     return (
         <div className='flex gap-12 w-full justify-start items-start border-b-[1px] border-veryDarkGray  pb-12 pt-6'>
             <img src={image.url} alt="" className="w-[350px] rounded-md border-[6px] border-veryDarkGray" />

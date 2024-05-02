@@ -27,6 +27,7 @@
     -moz-column-gap: 0px;
     column-count: 4;
     column-gap: 26px;
+    row-gap: 6px;
     
 }
 

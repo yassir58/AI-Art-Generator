@@ -39,17 +39,17 @@ const FeedScreen:React.FC = () =>{
             setList(filtered??[])
         }
     }, [data, keyword]);
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <div className={`${ui.loader}`}></div>
     if (!data) return <div>No data</div>
     console.log ('data: ', data)
     return (
-        <div className='w-[85%] p-6 h-full flex justify-start items-start  flex-col'>
+        <div className='w-[88%] p-6 h-full flex justify-start items-start  flex-col'>
             <form className='border-[1px] border-veryDarkGray rounded-lg w-[400px] flex justify-between p-2'>
                 <input onChange={(e)=>setKeyword (e.target.value)} type="text" className='bg-transparent outline-none border-none text-veryLightGray placeholder:text-[#535967] placeholder:text-sm placeholder:font-[500] flex-1'  placeholder='search images by keyworkds'/>
                 <img src="/Search.svg" alt="" />
             </form>
-        <div className={`${ui.gallery}`}>
-            {list?.length && list?.map((image:Image, index:number)=>{
+        <div className={`${ui.gallery} `}>
+            {list?.map((image:Image, index:number)=>{
                 return (
                     <Modal image={image} key={index}>
                         <Card image={image}/>
