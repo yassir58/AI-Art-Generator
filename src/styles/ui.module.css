@@ -29,6 +29,7 @@
     column-gap: 26px;
     row-gap: 16px;
     overflow-x: auto;
+    max-width: 100vw;
 }
 
 .imageItem {

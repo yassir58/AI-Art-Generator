@@ -46,13 +46,13 @@ const Sidebar:React.FC  = () =>{
                 </Link>
                 </div>
             </div>
-               <div className='relative'>
-                <div className={`absolute ${signoutOpen?'block':'hidden'} -top-[20px] -right-[180px] z-50 w-[200px] h-auto p-6 flex justify-start items-start rounded-md`}>
-                    <button className="primaryButton w-full justify-start shadow-md" onClick={() => signOut()}>
+                    <button className="primaryButton w-full justify-start shadow-md z-50 absolute bottom-0 left-0" onClick={() => signOut()}>
                         <img src="/signout.svg" alt="" />
                         Sign out
                     </button>
-                </div>
+               <div className='relative'>
+                {/* <div className={`absolute ${signoutOpen?'block':'hidden'} -top-[20px] -right-[180px] z-50 w-[200px] h-auto p-6 flex justify-start items-start rounded-md`}>
+                </div> */}
                {status == 'authenticated'? 
                <button className='border-none bg-transparent' onClick={()=> setSignoutOpen (!signoutOpen)}>
                 <img className='w-[40px] h-[40px] rounded-full' src={data?.user?.image??''}/>

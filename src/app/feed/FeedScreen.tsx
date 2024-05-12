@@ -41,11 +41,11 @@ const FeedScreen:React.FC = () =>{
     }, [data, keyword]);
     if (isLoading) return (
         <div className='w-[88%] p-6 h-full flex justify-start items-start  flex-col'>
-               <form className='border-[1px] border-veryDarkGray rounded-lg w-[400px] flex justify-between p-2'>
+               <form className='border-[1px] border-veryDarkGray rounded-lg w-[65vw] lg:w-[400px] flex justify-between p-2'>
                 <input onChange={(e)=>setKeyword (e.target.value)} type="text" className='bg-transparent outline-none border-none text-veryLightGray placeholder:text-[#535967] placeholder:text-sm placeholder:font-[500] flex-1'  placeholder='search images by keyworkds'/>
                 <img src="/Search.svg" alt="" />
             </form>
-            <div className={`${ui.gallery} min-h-[80vh]`}>
+            <div className={`${ui.gallery} min-h-[80vh] flex flex-wrap lg:block justify-start items-center`}>
                 <SkeletonCard height="h-[260px]"/>
                 <SkeletonCard height="h-[260px]"/>
                 <SkeletonCard height="h-[260px]"/>
@@ -61,11 +61,11 @@ const FeedScreen:React.FC = () =>{
     console.log ('data: ', data)
     return (
         <div className='w-[88%] p-6 h-full flex justify-start items-start  flex-col'>
-            <form className='border-[1px] border-veryDarkGray rounded-lg w-[400px] flex justify-between p-2'>
+            <form className='border-[1px] border-veryDarkGray rounded-lg w-[65vw] lg:w-[400px] flex justify-between p-2'>
                 <input onChange={(e)=>setKeyword (e.target.value)} type="text" className='bg-transparent outline-none border-none text-veryLightGray placeholder:text-[#535967] placeholder:text-sm placeholder:font-[500] flex-1'  placeholder='search images by keyworkds'/>
                 <img src="/Search.svg" alt="" />
             </form>
-        <div className={`${ui.gallery} min-h-[80vh]`}>
+        <div className={`${ui.gallery}   min-h-[80vh] flex flex-wrap lg:block justify-start items-center` }>
             {list?.map((image:Image, index:number)=>{
                 return (
                     <Modal image={image} key={index}>
