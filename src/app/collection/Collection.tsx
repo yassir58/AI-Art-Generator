@@ -21,13 +21,13 @@ const Collection:React.FC = ()=>{
     });
 
     if (isLoading)
-      return (<div className='flex justify-center items-center w-full h-full'>
+      return (<div className='flex justify-center items-center w-full h-full min-h-[80vh]'>
 
     <div className={`${ui.loader}`}></div>
   </div>)
     
     return (
-        <div className={`${ui.gallery}`}>
+        <div className={`${ui.gallery} min-h-[80vh]`}>
          {collection?.map((image:Image, index:number)=>{
                 return (
                     <Modal image={image} key={index}>

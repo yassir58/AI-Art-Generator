@@ -26,7 +26,7 @@ const Sidebar:React.FC  = () =>{
     console.log ('status: ', status)
     const onOpen = () => setIsOpen?.(true);
     return (
-        <div className='w-[60px] h-[100vh] fixed top-0 left-0 border-r-[1px] border-veryDarkGray flex flex-col justify-between items-center pb-6'>
+        <div className='w-[60px] h-[100vh] fixed top-0 left-0 border-r-[1px] border-veryDarkGray lg:flex hidden flex-col justify-between items-center pb-6 '>
             <div className='flex flex-col gap-16 justify-start items-center py-8'>
                 <Link className={`sideLink`} href='/'>
                     <img src="/Logo.svg" alt="" />

@@ -40,11 +40,10 @@ const Card:React.FC<props> = ({image})=>{
         onError: ()=> console.log ('failed to add item to collection')
     })
     return (
-        <div className='w-[230px] gap-4 h-auto relative z-10 mb-16' >
+        <div className='w-[230px] gap-4 h-auto  z-10' >
             <div className={`${ui.imageItem}`} onClick={()=>setIsOpen?.(true)}>
-                <img src={image.url} alt="" className='hover:opacity-85'/>
-            </div>
-            <div className='flex w-[230px] justify-between items-center absolute'>
+                {image?.url ? <img src={image.url} alt="" className='hover:opacity-85'/> : <SkeletonCard height='h-[230px]'/>  }
+            <div className='flex w-[230px] justify-between items-center '>
                 <div className='flex justify-start items-center gap-3 bottom-0 left-0'>
                     <div className='w-[30px] h-[30px] rounded-full bg-mediumGray flex justify-center items-center'>
                     <img src="/profile.svg" alt="" className="w-5"/>
@@ -57,9 +56,29 @@ const Card:React.FC<props> = ({image})=>{
                     <img src="/bookmark.svg" alt="" />
                 </button>
             </div>
+            </div>
 
         </div>
     )
 }
 
+
+interface skeletonProps {
+    height: string
+}
+export const SkeletonCard:React.FC<skeletonProps> = ({height}) =>{
+    return (
+        <div role='status' className={`w-[230px] ${height} rounded-md bg-gray dark:bg-gray-700 animate-pulse `}>
+            <p className='text-transparent'>text</p>
+        </div>
+    )
+}
+
+export const HorizontalCard:React.FC = ()=>{
+    return (
+        <div role='status' className={`h-[230px] w-full rounded-md bg-gray dark:bg-gray-700 animate-pulse `}>
+        <p className='text-transparent'>text</p>
+    </div>
+    )
+}
 export default Card

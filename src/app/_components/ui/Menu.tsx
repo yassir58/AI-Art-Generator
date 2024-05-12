@@ -11,7 +11,7 @@ const Menu = () => {
   };
   return (
     <>
-      <button className="iconButton fixed right-4 top-4 " onClick={toggleMenu}>
+      <button className="iconButton fixed right-4 top-4 block lg:hidden" onClick={toggleMenu}>
         <img src="/bars.svg" alt="" />
       </button>
       <div

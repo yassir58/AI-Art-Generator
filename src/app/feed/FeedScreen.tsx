@@ -3,7 +3,7 @@
 'use client'
 
 import { api } from "~/trpc/react"
-import Card from "../_components/ui/Card";
+import Card, {SkeletonCard} from "../_components/ui/Card";
 import Modal from "../_components/ui/Moda";
 import ui from '~/styles/ui.module.css'
 import {useState, useEffect } from 'react'
@@ -39,7 +39,24 @@ const FeedScreen:React.FC = () =>{
             setList(filtered??[])
         }
     }, [data, keyword]);
-    if (isLoading) return <div className={`${ui.loader}`}></div>
+    if (isLoading) return (
+        <div className='w-[88%] p-6 h-full flex justify-start items-start  flex-col'>
+               <form className='border-[1px] border-veryDarkGray rounded-lg w-[400px] flex justify-between p-2'>
+                <input onChange={(e)=>setKeyword (e.target.value)} type="text" className='bg-transparent outline-none border-none text-veryLightGray placeholder:text-[#535967] placeholder:text-sm placeholder:font-[500] flex-1'  placeholder='search images by keyworkds'/>
+                <img src="/Search.svg" alt="" />
+            </form>
+            <div className={`${ui.gallery} min-h-[80vh]`}>
+                <SkeletonCard height="h-[260px]"/>
+                <SkeletonCard height="h-[260px]"/>
+                <SkeletonCard height="h-[260px]"/>
+                <SkeletonCard height="h-[260px]"/>
+                {/* <SkeletonCard height="h-[60px]"/>
+                <SkeletonCard height="h-[60px]"/>
+                <SkeletonCard height="h-[60px]"/>
+                <SkeletonCard height="h-[60px]"/> */}
+         </div>
+        </div>
+    )
     if (!data) return <div>No data</div>
     console.log ('data: ', data)
     return (
@@ -48,7 +65,7 @@ const FeedScreen:React.FC = () =>{
                 <input onChange={(e)=>setKeyword (e.target.value)} type="text" className='bg-transparent outline-none border-none text-veryLightGray placeholder:text-[#535967] placeholder:text-sm placeholder:font-[500] flex-1'  placeholder='search images by keyworkds'/>
                 <img src="/Search.svg" alt="" />
             </form>
-        <div className={`${ui.gallery} `}>
+        <div className={`${ui.gallery} min-h-[80vh]`}>
             {list?.map((image:Image, index:number)=>{
                 return (
                     <Modal image={image} key={index}>

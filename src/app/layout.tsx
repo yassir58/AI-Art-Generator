@@ -27,12 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-      <main className={`w-full h-[100vh] bg-darkBlue flex justify-center items-center overflow-hidden`}>
+      <main className={`w-full min-h-[100vh] bg-darkBlue flex justify-center items-center `}>
         <TRPCReactProvider>
         <GlobalProvider>
           <ModalProvider>
           <Sidebar  />
-          {/* <Menu/> */}
+          <Menu/>
           <SigninModal/>
           <EdgeStoreProvider>{children}</EdgeStoreProvider>
         </ModalProvider>

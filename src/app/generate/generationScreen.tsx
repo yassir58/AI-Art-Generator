@@ -57,6 +57,7 @@ const GenerationScreen:React.FC = ()=>{
     "1280 x 800 (8:5)",
     "1280 x 1024 (5:4)",
     "1366 x 768 (683:384)",
+    "1080 x 1920 (9:16)"
   ];
 
 
@@ -205,8 +206,8 @@ const GenerationScreen:React.FC = ()=>{
           </button>
           </div>
         </div>
-        <div className="flex h-[500px] w-[450px] flex-col items-center justify-center rounded-md border-red bg-veryDarkGray">
-          <img src={`${url.length ? url : '/Box-shape.png'}`} className={` ${url.length ? 'w-[98%] rounded-md' : 'w-[400px]'}`} alt="" />
+        <div role='status' className={`flex min-h-[500px] min-h-auto ${isLoading ? 'animate-pulse dark:bg-gray-700': '' }  w-[450px] flex-col items-center justify-center rounded-md border-red bg-veryDarkGray`}>
+          <img src={`${url.length ? url : '/Box-shape.png'}`} className={` ${url.length ? 'w-[98%] max-w-[98%] max-h-[98%] rounded-md' : 'w-[400px]'}`} alt="" />
         </div>
       </div>
     </div>
