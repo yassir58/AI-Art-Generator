@@ -24,9 +24,9 @@ const HistoryCard:React.FC<props> = ({image})=>{
     
 
     return (
-        <div className='flex gap-12 w-full justify-start items-start border-b-[1px] border-veryDarkGray  pb-12 pt-6'>
+        <div className='flex flex-col lg:flex-row gap-12 w-full justify-start items-start border-b-[1px] border-veryDarkGray  pb-12 pt-6'>
             <img src={image.url} alt="" className="w-[350px] rounded-md border-[6px] border-veryDarkGray" />
-            <div className='flex-1 flex justify-start items-start gap-16'>
+            <div className='flex-1 flex flex-col md:flex-row justify-start items-start gap-16'>
                 <div className="flex flex-col justify-start items-start gap-8 max-w-[360px]">
                     <div className="flex-col flex justify-start items-start gap-2 ">
                         <h1 className="text-sm text-[#6C727F] font-[500]">Prompt Details</h1>
